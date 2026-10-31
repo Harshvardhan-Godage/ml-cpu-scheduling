@@ -1,0 +1,113 @@
+900 scenarios, 6300 simulation rows in 36s
+best_policy  FCFS  RR_q10  RR_q25  RR_q5  RR_q50
+size                                            
+50            117      52      79      3      49
+200           108      52      82      2      56
+500           113      46      80      2      59
+
+== Classification (policy/quantum prediction) ==
+                      accuracy         macro_f1        
+                          mean     std     mean     std
+size model                                             
+50   DecisionTree       0.5189  0.0672   0.4324  0.0915
+     LogReg(baseline)   0.5333  0.0546   0.4230  0.0683
+     RandomForest       0.5744  0.0534   0.4879  0.0846
+200  DecisionTree       0.4922  0.0636   0.4392  0.0956
+     LogReg(baseline)   0.4922  0.0587   0.4245  0.0952
+     RandomForest       0.5500  0.0504   0.4939  0.0859
+500  DecisionTree       0.5844  0.0486   0.4854  0.0863
+     LogReg(baseline)   0.5400  0.0617   0.4496  0.0920
+     RandomForest       0.6211  0.0752   0.5520  0.1238
+
+== OS-level summary (regret % vs oracle on label set) ==
+size                  50     200    500
+method                                 
+DecisionTree         2.36   1.57   1.07
+Fixed FCFS           6.37   5.53   6.80
+Fixed RR_q10         5.54   8.62   8.27
+Fixed SJF           -2.11  -5.42  -3.38
+LogReg(baseline)     2.01   1.91   1.26
+Oracle(all 7, ref.) -8.31 -13.07 -13.24
+Oracle(label set)    0.00   0.00   0.00
+RandomForest         2.01   1.25   0.64
+
+== Mean avg waiting time ==
+size                    50      200      500
+method                                      
+DecisionTree         1672.0  6737.0  16071.0
+Fixed FCFS           1780.0  7267.0  17116.0
+Fixed RR_q10         1695.0  6888.0  16457.0
+Fixed SJF            1086.0  4032.0   9560.0
+LogReg(baseline)     1669.0  6737.0  16084.0
+Oracle(all 7, ref.)  1200.0  4543.0  11000.0
+Oracle(label set)    1661.0  6732.0  16036.0
+RandomForest         1666.0  6717.0  16003.0
+
+== Mean avg response time ==
+size                   50     200     500
+method                                   
+DecisionTree         106.0  435.3  1126.6
+Fixed FCFS           222.7  762.2  1824.3
+Fixed RR_q10          57.6  225.0   579.9
+Fixed SJF            241.0  832.3  2074.4
+LogReg(baseline)     114.4  491.8  1327.1
+Oracle(all 7, ref.)  239.9  870.4  2200.8
+Oracle(label set)    110.6  411.8  1056.9
+RandomForest         108.8  423.2  1090.0
+
+== Wilcoxon (ML vs best fixed) ==
+    size          ml_model            vs  mean_regret_ml  mean_regret_fixed  wilcoxon_p
+0     50      DecisionTree    Fixed FCFS            2.36               6.37     9.9e-13
+1     50      RandomForest    Fixed FCFS            2.01               6.37    1.26e-15
+2     50  LogReg(baseline)    Fixed FCFS            2.01               6.37    3.02e-14
+3     50      DecisionTree     Fixed SJF            2.36              -2.11    2.83e-07
+4     50      RandomForest     Fixed SJF            2.01              -2.11    1.04e-06
+5     50  LogReg(baseline)     Fixed SJF            2.01              -2.11    1.48e-06
+6     50      DecisionTree  Fixed RR_q10            2.36               5.54    1.43e-22
+7     50      RandomForest  Fixed RR_q10            2.01               5.54    7.61e-23
+8     50  LogReg(baseline)  Fixed RR_q10            2.01               5.54    9.15e-22
+9    200      DecisionTree    Fixed FCFS            1.57               5.53    1.89e-13
+10   200      RandomForest    Fixed FCFS            1.25               5.53    1.14e-18
+11   200  LogReg(baseline)    Fixed FCFS            1.91               5.53    8.24e-12
+12   200      DecisionTree     Fixed SJF            1.57              -5.42    1.99e-08
+13   200      RandomForest     Fixed SJF            1.25              -5.42    4.95e-08
+14   200  LogReg(baseline)     Fixed SJF            1.91              -5.42    8.57e-09
+15   200      DecisionTree  Fixed RR_q10            1.57               8.62     6.4e-34
+16   200      RandomForest  Fixed RR_q10            1.25               8.62    4.41e-34
+17   200  LogReg(baseline)  Fixed RR_q10            1.91               8.62    5.24e-27
+18   500      DecisionTree    Fixed FCFS            1.07                6.8    6.56e-15
+19   500      RandomForest    Fixed FCFS           0.641                6.8     1.3e-21
+20   500  LogReg(baseline)    Fixed FCFS            1.26                6.8    2.44e-13
+21   500      DecisionTree     Fixed SJF            1.07              -3.38     5.3e-06
+22   500      RandomForest     Fixed SJF           0.641              -3.38    8.85e-06
+23   500  LogReg(baseline)     Fixed SJF            1.26              -3.38    1.91e-06
+24   500      DecisionTree  Fixed RR_q10            1.07               8.27    3.94e-34
+25   500      RandomForest  Fixed RR_q10           0.641               8.27    4.86e-37
+26   500  LogReg(baseline)  Fixed RR_q10            1.26               8.27    1.32e-30
+
+== Cross-size generalisation ==
+   held_out_size             model  accuracy  macro_f1  mean_regret_pct
+0             50      DecisionTree     0.497     0.350            2.127
+1             50      RandomForest     0.567     0.411            1.656
+2             50  LogReg(baseline)     0.500     0.336            2.456
+3            200      DecisionTree     0.587     0.468            1.185
+4            200      RandomForest     0.583     0.581            1.012
+5            200  LogReg(baseline)     0.540     0.398            1.715
+6            500      DecisionTree     0.560     0.434            1.303
+7            500      RandomForest     0.617     0.484            0.702
+8            500  LogReg(baseline)     0.543     0.418            1.482
+
+== Workload-type accuracy ==
+              model    mean     std
+0      DecisionTree  0.9533  0.0187
+1  LogReg(baseline)  0.9656  0.0099
+2      RandomForest  0.9611  0.0142
+
+== Top features ==
+offered_load           0.124
+mean_interarrival      0.114
+cv_cpu_burst           0.098
+max_over_mean_burst    0.095
+std_cpu_burst          0.073
+mean_cpu_burst         0.072
+dtype: float64
